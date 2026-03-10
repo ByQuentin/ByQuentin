@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/25882786/README.md)
 # ByQuentin – Des sites qui marquent les esprits
 
 Portfolio professionnel de création de sites web, à destination des artisans et commerçants de l'Allier et d'ailleurs.

@@ -1,0 +1,831 @@
+<?php
+/*
+ * Template Name: Portfolio ByQuentin
+ */
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ByQuentin – Des sites qui marquent les esprits</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0f0e0e;
+      --surface:  #181616;
+      --border:   rgba(255,255,255,.08);
+      --accent:   #E8522A;
+      --accent2:  #F0A500;
+      --text:     #F0ECE8;
+      --muted:    rgba(240,236,232,.45);
+      --card-bg:  #1d1a1a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(15,14,14,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: .08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+
+    nav { display: flex; gap: 36px; align-items: center; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 10px 22px;
+      border-radius: 2px;
+      letter-spacing: .08em;
+      transition: background .2s, transform .2s !important;
+    }
+    .nav-cta:hover { background: #cf4420; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 140px 60px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(232,82,42,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232,82,42,.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridMove 20s linear infinite;
+    }
+    @keyframes gridMove {
+      from { transform: translateY(0); }
+      to   { transform: translateY(60px); }
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(232,82,42,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp .8s .2s ease forwards;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: .92;
+      letter-spacing: .02em;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp .9s .35s ease forwards;
+    }
+
+    .hero h1 .accent { color: var(--accent); }
+    .hero h1 .outline {
+      -webkit-text-stroke: 1.5px var(--text);
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--muted);
+      margin-top: 28px;
+      max-width: 480px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp .9s .5s ease forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      margin-top: 48px;
+      opacity: 0;
+      animation: fadeUp .9s .65s ease forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-fill { background: var(--accent); color: #fff; }
+    .btn-fill:hover { box-shadow: 0 12px 40px rgba(232,82,42,.35); }
+    .btn-ghost { border: 1px solid var(--border); color: var(--text); }
+    .btn-ghost:hover { border-color: rgba(255,255,255,.3); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px; left: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: .75rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp .9s .9s ease forwards;
+    }
+    .scroll-line {
+      width: 40px; height: 1px;
+      background: var(--muted);
+      animation: scrollPulse 2s ease infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { width: 40px; opacity: .5; }
+      50%       { width: 60px; opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 60px; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: .03em;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 64px;
+    }
+
+    /* ── À PROPOS ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-visual { position: relative; }
+
+    .about-frame {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(232,82,42,.1), transparent 60%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -16px; right: -16px;
+      background: var(--accent);
+      color: #fff;
+      padding: 16px 20px;
+      border-radius: 3px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: .08em;
+      box-shadow: 0 8px 32px rgba(232,82,42,.4);
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+    }
+    .about-text strong { color: var(--text); font-weight: 600; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      color: var(--accent);
+      letter-spacing: .05em;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .8rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ── SERVICES ── */
+    .services-section { background: var(--surface); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+    }
+    .service-card:hover { background: #222020; }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width .4s ease;
+    }
+    .service-card:hover::before { width: 100%; }
+
+    .service-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      color: rgba(255,255,255,.04);
+      position: absolute;
+      top: 16px; right: 24px;
+      line-height: 1;
+      letter-spacing: .05em;
+    }
+
+    .service-icon { font-size: 2rem; margin-bottom: 24px; }
+
+    .service-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: .93rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .service-price {
+      display: inline-block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: .06em;
+      color: var(--accent);
+    }
+
+    /* ── RÉALISATIONS ── */
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .work-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+      text-decoration: none;
+      display: block;
+    }
+    .work-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.5);
+    }
+
+    .work-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      position: relative;
+      background: #222;
+    }
+
+    .work-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease;
+      display: block;
+    }
+    .work-card:hover .work-thumb img { transform: scale(1.05); }
+
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+    }
+    .work-card:hover .work-overlay { opacity: 1; }
+
+    .work-overlay-text {
+      color: #fff;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .work-info { padding: 24px; }
+    .work-tag {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .work-info h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .work-info p {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── CONTACT ── */
+    .contact-section { background: var(--surface); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-bottom: 16px;
+      margin-top: 40px;
+    }
+    .contact-info h3:first-child { margin-top: 0; }
+    .contact-info p, .contact-info a {
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.7;
+      text-decoration: none;
+    }
+    .contact-info a:hover { color: var(--accent); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+    .form-group label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      padding: 14px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .2s;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--accent); }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select option { background: var(--card-bg); }
+
+    .btn-submit {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 16px 36px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background .2s, transform .2s;
+    }
+    .btn-submit:hover { background: #cf4420; transform: translateY(-2px); }
+
+    #form-success {
+      display: none;
+      color: #4caf50;
+      font-size: .9rem;
+      margin-top: 8px;
+      padding: 12px 16px;
+      background: rgba(76,175,80,.08);
+      border: 1px solid rgba(76,175,80,.2);
+      border-radius: 2px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 60px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer .logo { font-size: 1.2rem; }
+    footer p { color: var(--muted); font-size: .8rem; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      header { padding: 16px 24px; }
+      section { padding: 70px 24px; }
+      .hero { padding: 120px 24px 60px; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .services-grid, .works-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-scroll { left: 24px; }
+      footer { padding: 32px 24px; }
+      nav { gap: 20px; }
+      nav a { font-size: .75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo">By<span>Quentin</span></a>
+  <nav>
+    <a href="#about">À propos</a>
+    <a href="#services">Services</a>
+    <a href="#works">Réalisations</a>
+    <a href="#contact" class="nav-cta">Me contacter</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Création de sites web</div>
+    <h1>
+      Des sites<br>
+      qui <span class="accent">marquent</span><br>
+      <span class="outline">les esprits</span>
+    </h1>
+    <p class="hero-sub">
+      Sites vitrines simples, rapides et efficaces pour les artisans et commerçants de l'Allier et d'ailleurs.
+    </p>
+    <div class="hero-ctas">
+      <a href="#works" class="btn btn-fill">Voir mes réalisations</a>
+      <a href="#contact" class="btn btn-ghost">Me contacter →</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Défiler
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-frame">
+        <img src="https://rippermpp.github.io/ByQuentin/imgdev.jpg" alt="Quentin" style="width:100%;height:100%;object-fit:cover;" />
+      </div>
+      <div class="about-badge">Allier · France</div>
+    </div>
+    <div class="about-text">
+      <div class="section-label reveal">À propos</div>
+      <h2 class="section-title reveal">Bonjour, je suis <span style="color:var(--accent)">Quentin</span></h2>
+      <p class="reveal reveal-delay-1">
+        Basé dans l'Allier, je crée des <strong>sites vitrines modernes</strong> pour les petites entreprises, artisans et commerçants qui veulent exister sur internet sans se ruiner.
+      </p>
+      <p class="reveal reveal-delay-2">
+        Mon approche : <strong>simple, efficace, honnête</strong>. Pas de jargon technique, pas de surprise sur la facture. Juste un site qui vous ressemble et qui fonctionne.
+      </p>
+      <div class="stats reveal reveal-delay-3">
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Réalisations</div>
+        </div>
+        <div>
+          <div class="stat-num">80€</div>
+          <div class="stat-label">À partir de</div>
+        </div>
+        <div>
+          <div class="stat-num">7j</div>
+          <div class="stat-label">Délai moyen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="services-section">
+  <div class="section-label reveal">Services</div>
+  <h2 class="section-title reveal">Ce que je propose</h2>
+  <p class="section-desc reveal">Des prestations claires, des tarifs fixes, sans mauvaise surprise.</p>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-icon">🌐</div>
+      <h3>Site Vitrine WordPress</h3>
+      <p>Site professionnel 1 à 5 pages avec formulaire de contact, adapté mobile, hébergé et livré clé en main.</p>
+      <span class="service-price">À partir de 200€</span>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">02</div>
+      <div class="service-icon">💻</div>
+      <h3>Site HTML sur mesure</h3>
+      <p>Site léger, ultra-rapide, codé en HTML/CSS/JS pur. Idéal pour une présence simple et économique.</p>
+      <span class="service-price">À partir de 80€</span>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">03</div>
+      <div class="service-icon">🔧</div>
+      <h3>Maintenance mensuelle</h3>
+      <p>Mises à jour, sauvegardes et petites retouches incluses. Votre site toujours à jour, sans effort.</p>
+      <span class="service-price">20€ / mois</span>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-num">04</div>
+      <div class="service-icon">✏️</div>
+      <h3>Modifications & ajouts</h3>
+      <p>Nouvelle page, nouvelle section, nouvelle fonctionnalité. Je m'adapte à vos besoins au fil du temps.</p>
+      <span class="service-price">50€ / modification</span>
+    </div>
+  </div>
+</section>
+
+<!-- RÉALISATIONS -->
+<section id="works">
+  <div class="section-label reveal">Réalisations</div>
+  <h2 class="section-title reveal">Mes projets</h2>
+  <p class="section-desc reveal">Quelques exemples de ce que je suis capable de créer pour vous.</p>
+
+  <div class="works-grid">
+    <a href="https://rippermpp.github.io/AuBonEndroit/" target="_blank" class="work-card reveal">
+      <div class="work-thumb">
+        <img src="https://rippermpp.github.io/ByQuentin/imgabe.png" alt="Au Bon Endroit" />
+        <div class="work-overlay">
+          <span class="work-overlay-text">Voir le site →</span>
+        </div>
+      </div>
+      <div class="work-info">
+        <div class="work-tag">HTML / CSS</div>
+        <h3>Au Bon Endroit</h3>
+        <p>Site vitrine pour un bar-restaurant routier familial à Saint-Genès-du-Retz.</p>
+      </div>
+    </a>
+
+    <a href="https://rippermpp.github.io/flashMPP/" target="_blank" class="work-card reveal reveal-delay-1">
+      <div class="work-thumb">
+        <img src="https://rippermpp.github.io/ByQuentin/imgflash.png" alt="FlashMPP" />
+        <div class="work-overlay">
+          <span class="work-overlay-text">Voir le projet →</span>
+        </div>
+      </div>
+      <div class="work-info">
+        <div class="work-tag">HTML / CSS / JS</div>
+        <h3>FlashMPP</h3>
+        <p>Outil web de génération de documents administratifs pour MonPompier.com.</p>
+      </div>
+    </a>
+
+    <a href="#contact" class="work-card reveal reveal-delay-2" style="border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:280px;text-align:center;padding:40px;">
+      <div style="font-size:2.5rem;margin-bottom:16px;">+</div>
+      <div class="work-tag">Votre projet ici</div>
+      <h3 style="margin-top:8px;">Votre site web</h3>
+      <p style="margin-top:8px;">Contactez-moi pour discuter de votre projet.</p>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-label reveal">Contact</div>
+      <h2 class="section-title reveal">Parlons de<br>votre projet</h2>
+      <p class="reveal" style="color:var(--muted);margin-bottom:0;">
+        Un projet en tête ? Une question ? Je réponds sous 24h.
+      </p>
+      <h3 class="reveal">Basé dans l'Allier</h3>
+      <p class="reveal">Intervention possible partout en France<br>pour les projets HTML / WordPress.</p>
+      <h3 class="reveal">Délai de réponse</h3>
+      <p class="reveal">Sous 24h en semaine.</p>
+    </div>
+
+    <form class="contact-form reveal" action="https://formspree.io/f/xojkenzv" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" name="prenom" placeholder="Prénom" required />
+        </div>
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" name="nom" placeholder="Nom" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="mail@mail.com" required />
+      </div>
+      <div class="form-group">
+        <label>Téléphone</label>
+        <input type="text" name="telephone" placeholder="06 12 34 56 78" required />
+      </div>
+      <div class="form-group">
+        <label>Type de projet</label>
+        <select name="projet">
+          <option>Nouveau site vitrine</option>
+          <option>Refonte d'un site existant</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Société</label>
+        <input type="text" name="societe" placeholder="Votre société (facultatif)" />
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea name="message" placeholder="Décrivez votre projet en quelques mots..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Envoyer le message →</button>
+      <div id="form-success">✓ Message envoyé ! Je vous réponds sous 24h.</div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo">By<span>Quentin</span></a>
+  <p>© 2026 ByQuentin · Création de sites web · Allier, France</p>
+  <p>Des sites qui marquent les esprits.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

@@ -598,6 +598,56 @@
       nav { gap: 20px; }
       nav a { font-size: .75rem; }
     }
+    /* ── COMPARATIF ── */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.compare-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 40px;
+  transition: border-color .3s;
+}
+.compare-card:hover { border-color: var(--accent); }
+
+.compare-icon { font-size: 2rem; margin-bottom: 16px; }
+
+.compare-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.compare-sub {
+  font-size: .85rem;
+  color: var(--accent);
+  font-style: italic;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.compare-list li {
+  font-size: .9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .compare-grid { grid-template-columns: 1fr; }
+  }
   </style>
 </head>
 <body>
@@ -684,14 +734,14 @@
       <div class="service-icon">🌐</div>
       <h3>Site Vitrine WordPress</h3>
       <p>Site professionnel 1 à 5 pages avec formulaire de contact, adapté mobile, hébergé et livré clé en main.</p>
-      <span class="service-price">À partir de 200€</span>
+      <span class="service-price">À partir de 250€</span>
     </div>
     <div class="service-card reveal reveal-delay-1">
       <div class="service-num">02</div>
       <div class="service-icon">💻</div>
       <h3>Site HTML sur mesure</h3>
       <p>Site léger, ultra-rapide, codé en HTML/CSS/JS pur. Idéal pour une présence simple et économique.</p>
-      <span class="service-price">À partir de 80€</span>
+      <span class="service-price">À partir de 120€</span>
     </div>
     <div class="service-card reveal reveal-delay-2">
       <div class="service-num">03</div>
@@ -705,9 +755,40 @@
       <div class="service-icon">✏️</div>
       <h3>Modifications & ajouts</h3>
       <p>Nouvelle page, nouvelle section, nouvelle fonctionnalité. Je m'adapte à vos besoins au fil du temps.</p>
-      <span class="service-price">50€ / modification</span>
+      <span class="service-price">20€ Modifications et ajout</span>
+      <br>
+      <span class="service-price">60€ Ajout de section ou de page</span>
     </div>
   </div>
+  <!-- COMPARATIF WP vs HTML -->
+<div class="compare-grid reveal" style="margin-top: 64px;">
+  <div class="compare-card">
+    <div class="compare-icon">🌐</div>
+    <h3 class="compare-title">WordPress</h3>
+    <p class="compare-sub">Pour un site évolutif et autonome</p>
+    <ul class="compare-list">
+      <li>✅ Interface d'administration simple</li>
+      <li>✅ Ajout de pages en autonomie</li>
+      <li>✅ Idéal pour blog ou catalogue</li>
+      <li>✅ Large choix d'extensions</li>
+      <li>⚠️ Nécessite un hébergement payant</li>
+      <li>⚠️ Mises à jour régulières requises</li>
+    </ul>
+  </div>
+  <div class="compare-card">
+    <div class="compare-icon">💻</div>
+    <h3 class="compare-title">HTML sur mesure</h3>
+    <p class="compare-sub">Pour un site rapide et sans abonnement</p>
+    <ul class="compare-list">
+      <li>✅ Ultra-rapide et léger</li>
+      <li>✅ Hébergement gratuit possible</li>
+      <li>✅ Aucune mise à jour à gérer</li>
+      <li>✅ Sécurisé (pas de CMS exposé)</li>
+      <li>⚠️ Modifications via le développeur</li>
+      <li>⚠️ Moins adapté à un gros catalogue</li>
+    </ul>
+  </div>
+</div>
 </section>
 
 <!-- RÉALISATIONS -->

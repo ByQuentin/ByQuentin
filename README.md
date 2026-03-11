@@ -2,7 +2,7 @@
 
 Portfolio professionnel de création de sites web, à destination des artisans et commerçants de l'Allier et d'ailleurs.
 
-🌐 **[byquentin.github.io/ByQuentin](https://byquentin.github.io/ByQuentin/)**
+🌐 **[ByQuentin](https://byquentin.42web.io)**
 
 ---
 

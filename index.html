@@ -848,7 +848,7 @@
       <p class="reveal">Sous 24h en semaine.</p>
     </div>
 
-    <form class="contact-form reveal" action="https://formspree.io/f/xojkenzv" method="POST">
+    <form class="contact-form reveal" action="https://formspree.io/f/xyknpkyn" method="POST">
       <div class="form-row">
         <div class="form-group">
           <label>Prénom</label>
@@ -880,10 +880,19 @@
         <input type="text" name="societe" placeholder="Votre société (facultatif)" />
       </div>
       <div class="form-group">
-        <label>Message</label>
-        <textarea name="message" placeholder="Décrivez votre projet en quelques mots..." required></textarea>
-      </div>
-      <button type="submit" class="btn-submit">Envoyer le message →</button>
+  <label>Message</label>
+  <textarea name="message" placeholder="Décrivez votre projet en quelques mots..." required></textarea>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; margin: 20px 0;">
+  <input type="checkbox" id="rgpd" name="rgpd" required>
+  <label for="rgpd" style="margin: 0; padding: 0; cursor: pointer; font-size: 0.80rem;">
+    J'ACCEPTE QUE MES DONNÉES SOIENT UTILISÉES POUR ME RECONTACTER. 
+    <a href="/confidentialite.html" style="color: #00d4ff; text-decoration: none;">VOIR LA POLITIQUE DE CONFIDENTIALITÉ</a>
+  </label>
+</div>
+
+<button type="submit" class="btn-submit">Envoyer le message →</button>
       <div id="form-success">✓ Message envoyé ! Je vous réponds sous 24h.</div>
     </form>
   </div>
@@ -891,9 +900,11 @@
 
 <!-- FOOTER -->
 <footer>
-  <a href="#" class="logo">By<span>Quentin</span></a>
-  <p>© 2026 ByQuentin · Création de sites web · Allier, France</p>
-  <p>Des sites qui marquent les esprits.</p>
+  <a href="#" class="logo">By<span>Quentin</span></a>|
+  <p>© 2026 ByQuentin · Création de sites web · Allier, France</p>|
+  <p>Des sites qui marquent les esprits.</p>|
+   <a href="/mentions-legales.html">Mentions légales</a> |
+  <a href="/confidentialite.html">Politique de confidentialité</a>
 </footer>
 
 <script>

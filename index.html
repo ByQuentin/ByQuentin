@@ -910,13 +910,53 @@
 </footer>
 
 <script>
-  // Scroll reveal
+  // 1. Scroll reveal
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) e.target.classList.add('visible');
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // 2. Validation et Envoi du formulaire
+  const contactForm = document.querySelector('.contact-form');
+  const successMessage = document.getElementById('form-success');
+
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault(); // Empêche le rechargement de la page
+
+    const formData = new FormData(this);
+    const submitBtn = this.querySelector('.btn-submit');
+    
+    // Changement d'état du bouton
+    submitBtn.innerText = "Envoi en cours...";
+    submitBtn.style.opacity = "0.7";
+    submitBtn.disabled = true;
+
+    try {
+      const response = await fetch(this.action, {
+        method: this.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        // Succès
+        successMessage.style.display = 'block';
+        contactForm.reset(); // Vide les champs
+        submitBtn.innerText = "Envoyer le message →";
+        submitBtn.style.opacity = "1";
+        submitBtn.disabled = false;
+        
+        // Cache le message après 5 secondes
+        setTimeout(() => { successMessage.style.display = 'none'; }, 5000);
+      } else {
+        alert("Oups ! Il y a eu un problème. Merci de réessayer.");
+      }
+    } catch (error) {
+      alert("Erreur de connexion. Vérifiez votre internet.");
+    }
+  });
 </script>
 
 

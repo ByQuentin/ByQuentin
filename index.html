@@ -34,6 +34,137 @@
       overflow-x: hidden;
     }
 
+    /* ── BANDEAU PROMO ── */
+    .promo-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: linear-gradient(135deg, var(--accent) 0%, #cf4420 100%);
+      padding: 12px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      box-shadow: 0 4px 20px rgba(232, 82, 42, 0.3);
+      animation: slideDown 0.6s ease;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    .promo-content {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .promo-text {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .promo-icon {
+      font-size: 1.4rem;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .promo-badge {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      animation: glow 2s ease infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+      50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
+    }
+
+    .promo-cta {
+      background: #fff;
+      color: var(--accent);
+      padding: 8px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .promo-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .promo-close {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.2s;
+      opacity: 0.7;
+    }
+
+    .promo-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      opacity: 1;
+    }
+
+    .promo-banner.hidden {
+      animation: slideUp 0.4s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(0); }
+      to { transform: translateY(-100%); }
+    }
+
+    /* Ajustement du header pour compenser le bandeau */
+    body:not(.banner-closed) header {
+      top: 48px;
+    }
+
+    body:not(.banner-closed) .hero {
+      padding-top: 188px;
+    }
+
     /* ── HEADER ── */
     header {
       position: fixed;
@@ -46,6 +177,7 @@
       background: rgba(15,14,14,.85);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
+      transition: top 0.4s ease;
     }
 
     .logo {
@@ -87,6 +219,7 @@
       padding: 140px 60px 80px;
       position: relative;
       overflow: hidden;
+      transition: padding-top 0.4s ease;
     }
 
     .hero::before {
@@ -588,6 +721,36 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
+      .promo-banner {
+        padding: 12px 24px;
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .promo-content {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .promo-text {
+        font-size: 0.8rem;
+        text-align: center;
+      }
+      
+      .promo-close {
+        right: 12px;
+        top: 12px;
+        transform: none;
+      }
+
+      body:not(.banner-closed) header {
+        top: 120px;
+      }
+
+      body:not(.banner-closed) .hero {
+        padding-top: 260px;
+      }
+
       header { padding: 16px 24px; }
       section { padding: 70px 24px; }
       .hero { padding: 120px 24px 60px; }
@@ -654,6 +817,19 @@
   <link rel="icon" type="image/png" href="https://byquentin.github.io/ByQuentin/favicon.png" />
 </head>
 <body>
+
+<!-- BANDEAU PROMO -->
+<div class="promo-banner" id="promoBanner">
+  <div class="promo-content">
+    <div class="promo-text">
+      <span class="promo-icon">🔥</span>
+      <span><strong>Offre Limitée</strong> · Site vitrine HTML à partir de 120€</span>
+    </div>
+    <div class="promo-badge">5 PLACES RESTANTES</div>
+    <a href="#contact" class="promo-cta">Réserver ma place →</a>
+  </div>
+  <button class="promo-close" id="closePromo" aria-label="Fermer">&times;</button>
+</div>
 
 <!-- HEADER -->
 <header>
@@ -927,17 +1103,39 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // 2. Validation et Envoi du formulaire
+  // 2. Gestion du bandeau promo
+  const promoBanner = document.getElementById('promoBanner');
+  const closePromo = document.getElementById('closePromo');
+
+  closePromo.addEventListener('click', () => {
+    promoBanner.classList.add('hidden');
+    document.body.classList.add('banner-closed');
+    
+    // Suppression du bandeau après l'animation
+    setTimeout(() => {
+      promoBanner.style.display = 'none';
+    }, 400);
+
+    // Stockage en localStorage pour ne pas réafficher le bandeau
+    localStorage.setItem('promoBannerClosed', 'true');
+  });
+
+  // Vérifier si le bandeau a déjà été fermé
+  if (localStorage.getItem('promoBannerClosed') === 'true') {
+    promoBanner.style.display = 'none';
+    document.body.classList.add('banner-closed');
+  }
+
+  // 3. Validation et Envoi du formulaire
   const contactForm = document.querySelector('.contact-form');
   const successMessage = document.getElementById('form-success');
 
   contactForm.addEventListener('submit', async function(e) {
-    e.preventDefault(); // Empêche le rechargement de la page
+    e.preventDefault();
 
     const formData = new FormData(this);
     const submitBtn = this.querySelector('.btn-submit');
     
-    // Changement d'état du bouton
     submitBtn.innerText = "Envoi en cours...";
     submitBtn.style.opacity = "0.7";
     submitBtn.disabled = true;
@@ -950,14 +1148,12 @@
       });
 
       if (response.ok) {
-        // Succès
         successMessage.style.display = 'block';
-        contactForm.reset(); // Vide les champs
+        contactForm.reset();
         submitBtn.innerText = "Envoyer le message →";
         submitBtn.style.opacity = "1";
         submitBtn.disabled = false;
         
-        // Cache le message après 5 secondes
         setTimeout(() => { successMessage.style.display = 'none'; }, 5000);
       } else {
         alert("Oups ! Il y a eu un problème. Merci de réessayer.");
@@ -969,5 +1165,5 @@
 </script>
 
 
-</body>
+</body> 
 </html>
